@@ -28,7 +28,7 @@ export class CoursesService {
         return course
     }
 
-    async create(createCourseDto: CreateCourseDTO): Promise<CreateCourseDTO> {
+    async create(createCourseDto: any): Promise<CreateCourseDTO> {
         const course: Course = {
             id: uuid(),
             ...createCourseDto
@@ -37,7 +37,7 @@ export class CoursesService {
         return createCourseDto
     }
 
-    async update(id: string, updateCourseDto: UpdateCourseDTO) {
+    async update(id: string, updateCourseDto: any) {
         const course = await this.courseRepository.preload({
             ...updateCourseDto,
             id,
