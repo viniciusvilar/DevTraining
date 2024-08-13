@@ -29,12 +29,13 @@ export class CoursesService {
         return course
     }
 
-    create(createCourseDto: CreateCourseDTO) {
+    create(createCourseDto: CreateCourseDTO): CreateCourseDTO {
         const course: Course = {
             id: uuid(),
             ...createCourseDto
         }
         this.courses.push(course)
+        return createCourseDto
     }
 
     update(id: string, updateCourseDto: UpdateCourseDTO) {
