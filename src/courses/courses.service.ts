@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { Course } from './courses.entity';
+import { Course } from './entities/courses.entity';
 import { CreateCourseDTO } from './dto/create-couse.dto';
 import { UpdateCourseDTO } from './dto/update-course.dto';
 import {v4 as uuid} from 'uuid'
