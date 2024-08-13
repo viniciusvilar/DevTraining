@@ -1,11 +1,14 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Course } from './courses.entity';
+import { CreateCourseDTO } from './dto/create-couse.dto';
+import { UpdateCourseDTO } from './dto/update-course.dto';
+import {v4 as uuid} from 'uuid'
 
 @Injectable()
 export class CoursesService {
     private courses: Course[] = [
         {
-            id: 1,
+            id: uuid(),
             name: "NestJS",
             description: "Curso sobre fundamentos do framework NestJS",
             tags: ['node.js', 'nestjs', 'javascript', 'typescript']
@@ -16,7 +19,7 @@ export class CoursesService {
         return this.courses;
     }
 
-    findOne(id: number) {
+    findOne(id: string) {
         const course = this.courses.find(course => course.id === id)
 
         if (!course) {
@@ -26,23 +29,29 @@ export class CoursesService {
         return course
     }
 
-    create(createCourseDto: any) {
-        this.courses.push(createCourseDto)
+    create(createCourseDto: CreateCourseDTO) {
+        const course: Course = {
+            id: uuid(),
+            ...createCourseDto
+        }
+        this.courses.push(course)
     }
 
-    update(id: number, updateCourseDto: any) {
-        const existingCourse = this.findOne(id)
+    update(id: string, updateCourseDto: UpdateCourseDTO) {
+        const existingCourse = this.courses.find(course => course.id === id)
 
         if (existingCourse) {
             const index = this.courses.findIndex(course => course.id === id)
             this.courses[index] = {
                 id,
-                ...updateCourseDto
+                name: updateCourseDto.name ?? existingCourse.name,
+                description: updateCourseDto.description ?? existingCourse.description,
+                tags: updateCourseDto.tags ?? existingCourse.tags,
             }
         }
     }
 
-    remove(id: number) {
+    remove(id: string) {
         const index = this.courses.findIndex(course => course.id === id)
 
         if (index >= 0) {
