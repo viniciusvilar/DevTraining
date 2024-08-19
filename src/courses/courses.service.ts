@@ -41,7 +41,6 @@ export class CoursesService {
             createCourseDto.tags.map(name => this.preloadTagByName(name))
         )
         const course = this.courseRepository.create({
-            id: uuid(),
             ...createCourseDto,
             tags
         })

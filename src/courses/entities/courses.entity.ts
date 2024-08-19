@@ -1,9 +1,10 @@
-import { Column, Entity, JoinTable, ManyToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, Column, CreateDateColumn, Entity, JoinTable, ManyToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 import { Tag } from "./tags.entity";
+import { randomUUID } from "crypto";
 
 @Entity('courses')
 export class Course {
-    @PrimaryColumn()
+    @PrimaryColumn("uuid")
     id: string;
 
     @Column()
@@ -17,4 +18,16 @@ export class Course {
         cascade: true
     })
     tags: Tag[]
+
+    @CreateDateColumn({ type: 'timestamp'})
+    created_at: Date
+
+    @BeforeInsert()
+    generatedId() {
+        if (this.id) {
+            return
+        }
+
+        this.id = randomUUID()
+    }
 }
