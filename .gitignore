@@ -1,3 +1,4 @@
+/.vscode
 /.docker
 # compiled output
 /dist
