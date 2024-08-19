@@ -11,7 +11,7 @@ export const dataSourceOptions: DataSourceOptions = {
     username: 'postgres',
     password: 'docker',
     database: 'devtraining',
-    entities: [__dirname + '/src/courses/entities/*.ts'],
+    entities: [__dirname + '/../**/*.entity.{js,ts}'],
     synchronize: false,
     
 }

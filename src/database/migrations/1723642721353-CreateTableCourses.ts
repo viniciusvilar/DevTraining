@@ -17,7 +17,7 @@ export class CreateTableCourses1723642721353 implements MigrationInterface {
                     type: 'varchar'
                 },
                 {
-                    name: 'desccription',
+                    name: 'description',
                     type: 'varchar'
                 },
                 {
