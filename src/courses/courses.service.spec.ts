@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { CoursesService } from './courses.service';
 import { randomUUID } from 'crypto';
 import { CreateCourseDTO } from './dto/create-couse.dto';
+import { UpdateCourseDTO } from './dto/update-course.dto';
 
 describe('CoursesService unit tests', () => {
 
@@ -70,5 +71,49 @@ describe('CoursesService unit tests', () => {
 
     expect(mockCourseRepository.save).toHaveBeenCalled();
     expect(expectOutputCourses).toStrictEqual(newCourse)
+  });
+
+  it('should list all course', async () => {
+
+    //@ts-expect-error defined part of methods
+    service['courseRepository'] = mockCourseRepository
+    
+
+    const courses = await service.findAll()
+
+    expect(mockCourseRepository.find).toHaveBeenCalled();
+    expect(expectOutputCourses).toStrictEqual(courses)
+  });
+
+  it('should list a course by id', async () => {
+
+    //@ts-expect-error defined part of methods
+    service['courseRepository'] = mockCourseRepository
+    
+    
+    const course = await service.findOne(id)
+
+    expect(mockCourseRepository.findOne).toHaveBeenCalled();
+    expect(expectOutputCourses).toStrictEqual(course)
+  });
+
+  it('should update a course', async () => {
+
+    //@ts-expect-error defined part of methods
+    service['courseRepository'] = mockCourseRepository
+    //@ts-expect-error defined part of methods
+    service['tagRepository'] = mockTagRepository
+
+    const updateCourseDto : UpdateCourseDTO = {
+      name: 'test',
+      description: 'test description',
+      tags: ['nestjs']
+    }
+
+    const course = await service.update(id, updateCourseDto)
+
+    expect(mockCourseRepository.save).toHaveBeenCalled();
+    expect(mockCourseRepository.preload).toHaveBeenCalled();
+    expect(expectOutputCourses).toStrictEqual(course)
   });
 });
